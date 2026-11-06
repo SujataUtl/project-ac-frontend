@@ -1,0 +1,235 @@
+@let s = site.settings()!;
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="bg-grid"></div>
+  <div class="orb sky" style="width:520px;height:520px;top:-160px;right:-120px"></div>
+  <div class="orb indigo" style="width:460px;height:460px;bottom:-220px;left:-160px"></div>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="pill"><span class="dot"></span>{{ s.tagline }}</span>
+      <h1>{{ headline().start }}<span class="grad-text">{{ headline().end }}</span></h1>
+      <p class="lead">{{ s.hero_subtext }}</p>
+      <div class="btn-row">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">{{ s.hero_primary_cta }} <app-icon name="arrow-right" [size]="18" /></a>
+        <a routerLink="/services" class="btn btn-ghost-light btn-lg">{{ s.hero_secondary_cta }}</a>
+      </div>
+      <ul class="hero-points">
+        <li><app-icon name="check" [size]="16" /> End-to-end delivery</li>
+        <li><app-icon name="check" [size]="16" /> Senior engineers</li>
+        <li><app-icon name="check" [size]="16" /> Mobile · Web · IoT</li>
+      </ul>
+    </div>
+
+    <!-- Decorative product visual -->
+    <div class="hero-visual" aria-hidden="true">
+     <div class="stage" tilt3d [tiltMax]="10">
+      <div class="window">
+        <div class="win-bar"><i></i><i></i><i></i><span>Connected Operations</span></div>
+        <div class="win-body">
+          <div class="kpis">
+            <div><small>Devices</small><b>Online</b><em class="up">● Live</em></div>
+            <div><small>Data stream</small><b>MQTT</b><em class="up">● Active</em></div>
+            <div><small>API</small><b>REST</b><em>Healthy</em></div>
+          </div>
+          <div class="chart">
+            @for (b of bars; track $index) { <span [style.height.%]="b" [style.animation-delay.ms]="$index * 70"></span> }
+          </div>
+          <div class="rows">
+            <div><app-icon name="cpu" [size]="16" /> Sensor gateway <em class="ok">Connected</em></div>
+            <div><app-icon name="server" [size]="16" /> Cloud service <em class="ok">Running</em></div>
+            <div><app-icon name="smartphone" [size]="16" /> Mobile app <em class="ok">Synced</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="ph-head"><small>Good morning</small><b>Dashboard</b></div>
+        <div class="ph-card"><app-icon name="activity" [size]="18" /><div><small>Real-time</small><b>Insights</b></div></div>
+        <div class="ph-toggle"><span>Notifications</span><i class="on"></i></div>
+        <div class="ph-toggle"><span>Auto sync</span><i class="on"></i></div>
+        <div class="ph-toggle"><span>Offline mode</span><i></i></div>
+      </div>
+
+      <div class="float f1"><app-icon name="shield-check" [size]="18" /> Secure by design</div>
+      <div class="float f2"><app-icon name="zap" [size]="18" /> Real-time sync</div>
+     </div>
+    </div>
+  </div>
+
+  @if (techLoop().length) {
+    <div class="container tech-strip">
+      <p>Technologies we build with</p>
+      <div class="marquee">
+        <div class="marquee-track">
+          @for (t of techLoop(); track $index) { <span class="chip dark">{{ t }}</span> }
+        </div>
+      </div>
+    </div>
+  }
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section">
+  <div class="bg-dots"></div>
+  <div class="container split-2">
+    <div reveal>
+      <span class="eyebrow">About us</span>
+      <h2>Your engineering partner from idea to launch</h2>
+      <p class="lead">{{ s.about_short }}</p>
+      <a routerLink="/about" class="btn btn-outline">More about us <app-icon name="arrow-right" [size]="16" /></a>
+    </div>
+    <div class="pillars">
+      @for (p of pillars; track p.title; let i = $index) {
+        <div class="tilt-wrap" reveal [revealDelay]="i * 90">
+          <div class="card card-3d pillar" tilt3d [tiltMax]="12">
+            <div class="icon-tile solid z-3"><app-icon [name]="p.icon" [size]="24" /></div>
+            <h3 class="z-2">{{ p.title }}</h3>
+            <p class="z-1">{{ p.text }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section soft">
+  <div class="container">
+    <div class="section-head center" reveal>
+      <span class="eyebrow">Our services</span>
+      <h2>Everything you need to build and scale digital products</h2>
+      <p>One team for strategy, design, engineering and support — across mobile, web, IoT and the cloud.</p>
+    </div>
+    <div class="grid grid-4">
+      @for (svc of site.services(); track svc.id; let i = $index) {
+        <div class="tilt-wrap" reveal [revealDelay]="(i % 4) * 80"><app-service-card [service]="svc" tilt3d [tiltMax]="9" /></div>
+      }
+      <div class="tilt-wrap" reveal [revealDelay]="(site.services().length % 4) * 80">
+      <a class="card idea-card" routerLink="/contact" tilt3d [tiltMax]="9">
+        <div class="icon-tile"><app-icon name="lightbulb" [size]="26" /></div>
+        <h3>Something else in mind?</h3>
+        <p>Tell us what you're building — we'll help you find the right approach.</p>
+        <span class="more">Talk to us <app-icon name="arrow-right" [size]="16" /></span>
+      </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE US ============ -->
+@if (site.whyChooseUs().length) {
+  <section class="section dark">
+    <div class="bg-grid"></div>
+    <div class="orb indigo" style="width:420px;height:420px;top:-120px;right:-120px;opacity:.35"></div>
+    <div class="container" style="position:relative">
+      <div class="section-head" reveal>
+        <span class="eyebrow">Why choose us</span>
+        <h2>Built by engineers who care about the details</h2>
+        <p>We combine deep technical skill with clear communication, so you always know where your product stands.</p>
+      </div>
+      <div class="grid grid-3">
+        @for (h of site.whyChooseUs(); track h.id; let i = $index) {
+          <div class="tilt-wrap" reveal [revealDelay]="(i % 3) * 90">
+            <div class="feature-dark" tilt3d [tiltMax]="10">
+              <div class="icon-tile z-3"><app-icon [name]="h.icon || 'check'" [size]="24" /></div>
+              <h3 class="z-2">{{ h.title }}</h3>
+              <p class="z-1">{{ h.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- ============ PROCESS ============ -->
+@if (site.processSteps().length) {
+  <section class="section">
+    <div class="container">
+      <div class="section-head split" reveal>
+        <div>
+          <span class="eyebrow">How we work</span>
+          <h2>A clear process from discovery to support</h2>
+        </div>
+        <a routerLink="/process" class="btn btn-outline">Our process <app-icon name="arrow-right" [size]="16" /></a>
+      </div>
+      <ol class="steps">
+        @for (p of site.processSteps(); track p.id; let i = $index) {
+          <li reveal [revealDelay]="i * 80">
+            <span class="num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.description }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+}
+
+<!-- ============ FEATURED WORK ============ -->
+@if (site.featuredProjects().length) {
+  <section class="section soft">
+    <div class="container">
+      <div class="section-head split" reveal>
+        <div>
+          <span class="eyebrow">Featured work</span>
+          <h2>Problems we've solved</h2>
+        </div>
+        <a routerLink="/portfolio" class="btn btn-outline">View all work <app-icon name="arrow-right" [size]="16" /></a>
+      </div>
+      <div class="grid grid-3">
+        @for (p of site.featuredProjects(); track p.id; let i = $index) {
+          <div class="tilt-wrap" reveal [revealDelay]="i * 90"><app-project-card [project]="p" tilt3d [tiltMax]="6" /></div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- ============ INDUSTRIES ============ -->
+@if (site.industries().length) {
+  <section class="section">
+    <div class="container">
+      <div class="section-head center" reveal>
+        <span class="eyebrow">Industries we serve</span>
+        <h2>Technology for real-world businesses</h2>
+      </div>
+      <div class="grid grid-3">
+        @for (ind of site.industries(); track ind.id; let i = $index) {
+          <div class="tilt-wrap" reveal [revealDelay]="(i % 3) * 80">
+            <div class="card card-3d industry" tilt3d [tiltMax]="9">
+              <div class="icon-tile z-2"><app-icon [name]="ind.icon" [size]="24" /></div>
+              <div class="z-1"><h3>{{ ind.title }}</h3><p>{{ ind.description }}</p></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- ============ FAQ ============ -->
+@if (site.faqs().length) {
+  <section class="section soft" id="faq">
+    <div class="container faq-wrap">
+      <div class="section-head" reveal>
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions we often hear</h2>
+        <p>Can't find your answer? <a routerLink="/contact">Ask us directly</a>.</p>
+      </div>
+      <div class="faq-list">
+        @for (q of site.faqs(); track q.id; let i = $index) {
+          <details class="faq" reveal [revealDelay]="(i % 4) * 60" [open]="i === 0">
+            <summary>{{ q.title }}<span class="chev" aria-hidden="true"></span></summary>
+            <p class="pre-line">{{ q.description }}</p>
+          </details>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<app-cta-band />
